@@ -8,8 +8,10 @@ public class SpeakerTurn {
     private String speaker;
     private int wordCount;
 
+    //Sentences contain the specific sentences in the speakerturn. Tokens are words with special characters attached sometimes. Words contain lowercase tokens, without any special characters attached.
     private ArrayList<String> sentences;
     private ArrayList<String> tokens;
+    private ArrayList<String> words;
 
     public SpeakerTurn(int turnNumber, String text, String speaker){
         this.turnNumber = turnNumber;
@@ -17,6 +19,7 @@ public class SpeakerTurn {
         this.speaker = speaker;
         this.sentences = Utils.sentenize(this.text);
         this.tokens = Utils.tokenize(this.text);
+        this.words = Utils.wordize(this.tokens);
 
         //get word number from text
         String trim = text.trim();
@@ -44,6 +47,9 @@ public class SpeakerTurn {
     }
     public ArrayList<String> getTokens(){
         return this.tokens;
+    }
+    public ArrayList<String> getWords(){
+        return this.words;
     }
 
     public String toString(){

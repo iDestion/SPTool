@@ -47,4 +47,14 @@ public class Utils {
         return result;
     }
 
+
+    //Removes special characters from tokens
+    public static ArrayList<String> wordize(ArrayList<String> input){
+        ArrayList<String> result = new ArrayList<>();
+        for(String token : input){
+            result.add(token.replaceAll("[^a-zA-Z0-9_-]", "").toLowerCase());
+        }
+        return result;
+    }
+
 }

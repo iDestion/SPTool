@@ -11,7 +11,7 @@ public class Main {
         try {
             ArrayList<SpeakerTurn> turns = Utils.splitTurns(file);
             for(SpeakerTurn turn : turns) {
-                System.out.println(turn.getSentences());
+                System.out.println(turn.getWords());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
