@@ -57,4 +57,16 @@ public class Utils {
         return result;
     }
 
+    public static double frequency(String text, String term){
+        return 0;
+    }
+
+    public static double wordCount(String input){
+        return 0;
+    }
+
+    public static double frequency(String text, ArrayList<String> terms){
+        return 0;
+    }
+
 }
