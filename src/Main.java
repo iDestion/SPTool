@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,14 +12,18 @@ public class Main {
 
         File file = new File("test.txt");
 
-        ArrayList<String> in = new ArrayList<String>(List.of(args));
+        ArrayList<String> in = new ArrayList<>(List.of(args));
 
         try {
             ArrayList<SpeakerTurn> turns = Utils.splitTurns(file);
             HashMap<SpeakerTurn, Double> scores = Searcher.multiLongTermFrequency(turns, in, false);
+            File output = new File("out.txt");
+            PrintWriter out = new PrintWriter(output);
             for(SpeakerTurn turn : scores.keySet()){
-                System.out.println("Speakerturn text: " + turn.getText() + "\n Score: " + scores.get(turn));
+                out.write(turn.getText() + " : " + scores.get(turn) + "\n");
             }
+            out.flush();
+            out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
