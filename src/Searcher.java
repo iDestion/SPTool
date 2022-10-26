@@ -1,7 +1,5 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class Searcher {
 
@@ -10,18 +8,27 @@ public class Searcher {
     //Returns a map with speakerturns and their respective scores according to the amount of occurrences of the terms. Splits input terms into single words to score turns.
     public static HashMap<SpeakerTurn, Double> multiTermFrequency(ArrayList<SpeakerTurn> input, ArrayList<String> terms,
                                                                   boolean compensateLength){
+
+        //Remove duplicate terms
+        Set<String> termset = new HashSet<>(terms);
+        terms.clear();
+        terms.addAll(termset);
+
         HashMap<SpeakerTurn, Double> result = new HashMap<>();
 
         //Split terms into individual terms
         ArrayList<String> termsSplit = new ArrayList<>();
         for (String term : terms){
             ArrayList<String> split = Utils.tokenize(term);
-            for (String spl : split){
-                termsSplit.add(spl);
-            }
+            termsSplit.addAll(split);
         }
 
         termsSplit = Utils.wordize(termsSplit);
+
+        //Remove duplicate word from split
+        Set<String> wordset = new HashSet<>(termsSplit);
+        termsSplit.clear();
+        termsSplit.addAll(wordset);
 
         //For each speaker turn, look at the simple words that are in the turn, count the frequency of the searchterms,
         // this is the score for the specific turn. Possibility for accounting for longer terms.
@@ -70,13 +77,13 @@ public class Searcher {
             }
         }
 
-        //Check for strings longer than 1 word.
+        //Check for strings longer than 1 word. Score according to the length of the String.
         for(SpeakerTurn turn : input){
             double score = result.get(turn);
             for(String term : terms){
                 if(term.split(" ").length > 1){
                     if(turn.getText().contains(term)) {
-                        score += 100;
+                        score += term.split(" ").length;
                     }
                 }
             }
