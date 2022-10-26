@@ -16,7 +16,7 @@ public class Main {
         final String JSON = "console";
 
 
-        File file = new File("test.txt");
+        File file = new File("in.txt");
 
         ArrayList<String> in = new ArrayList<>(List.of(args));
 
