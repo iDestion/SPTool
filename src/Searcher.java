@@ -61,9 +61,7 @@ public class Searcher {
         ArrayList<String> termsSplit = new ArrayList<>();
         for (String term : terms) {
             ArrayList<String> split = Utils.tokenize(term);
-            for (String spl : split) {
-                termsSplit.add(spl);
-            }
+            termsSplit.addAll(split);
         }
 
         termsSplit = Utils.wordize(termsSplit);
