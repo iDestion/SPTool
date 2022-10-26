@@ -50,6 +50,12 @@ public class Searcher {
     //Returns a map with speakerturns and their respective scores according to the amount of occurrences of the terms. Scores terms as individual words as well as longer strings (in the case they are longer than 1 word). TODO check if score needs to be adjusted for longer terms.
     public static HashMap<SpeakerTurn, Double> multiLongTermFrequency(ArrayList<SpeakerTurn> input, ArrayList<String> terms,
                                                                   boolean compensateLength){
+
+        //Remove duplicate terms
+        Set<String> termset = new HashSet<>(terms);
+        terms.clear();
+        terms.addAll(termset);
+
         HashMap<SpeakerTurn, Double> result = new HashMap<>();
 
         //Split terms into individual terms
@@ -62,6 +68,11 @@ public class Searcher {
         }
 
         termsSplit = Utils.wordize(termsSplit);
+
+        //Remove duplicate word from split
+        Set<String> wordset = new HashSet<>(termsSplit);
+        termsSplit.clear();
+        termsSplit.addAll(wordset);
 
         //For each speaker turn, look at the simple words that are in the turn, count the frequency of the searchterms,
         // this is the score for the specific turn. Possibility for accounting for longer terms.
