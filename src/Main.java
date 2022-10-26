@@ -11,7 +11,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Boolean json = true;
+        //final String JSON = "json";
+        //final String JSON = "txt";
+        final String JSON = "console";
+
 
         File file = new File("test.txt");
 
@@ -21,15 +24,22 @@ public class Main {
             ArrayList<SpeakerTurn> turns = Utils.splitTurns(file);
             HashMap<SpeakerTurn, Double> scores = Searcher.multiLongTermFrequency(turns, in, false);
             File output;
-            if(json){
+            if(JSON.equals("json")){
                 output = new File("out.json");
-            } else {
+            } else if (JSON.equals("txt")) {
                 output = new File("out.txt");
+            } else {
+                output = null;
             }
-            PrintWriter out = new PrintWriter(output);
+            PrintWriter out;
+            if(JSON.equals("json") || JSON.equals("txt")) {
+                out = new PrintWriter(output);
+            } else {
+                out = new PrintWriter(System.out);
+            }
             JSONArray array = new JSONArray();
             for (SpeakerTurn turn : scores.keySet()) {
-                if(json){
+                if(JSON.equals("json")){
                     JSONObject obj = new JSONObject();
                     obj.put("turnNumber", turn.getTurnNumber());
                     obj.put("speaker", turn.getSpeaker());
@@ -41,8 +51,7 @@ public class Main {
                     out.write(turn.getText() + " : " + scores.get(turn) + "\n");
                 }
             }
-            if(json){out.write(array.toJSONString());}
-
+            if(JSON.equals("json")){out.write(array.toJSONString());}
             out.flush();
             out.close();
         } catch (FileNotFoundException e) {
