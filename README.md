@@ -11,4 +11,4 @@ Run tool with program arguments containing strings that define the terms to be s
 Depending on the `final String JSON` active in Main.java, the program writes a JSON file, TXT file or textual output to the console.
 
 ###Dependencies
-Tool depends on the `Json.Simple` library
+Tool depends on the `Json.Simple` library. Jar file for json-simple can be found in the lib folder included in the project. 
