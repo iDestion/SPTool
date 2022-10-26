@@ -7,7 +7,7 @@ public class Searcher {
 
     private final static ArrayList<String> canditerms = new ArrayList<>();
 
-    //Returns a map with speakerturns and their respective scores according to the amount of occurrences of the terms.
+    //Returns a map with speakerturns and their respective scores according to the amount of occurrences of the terms. Splits input terms into single words to score turns.
     public static HashMap<SpeakerTurn, Double> multiTermFrequency(ArrayList<SpeakerTurn> input, ArrayList<String> terms,
                                                                   boolean compensateLength){
         HashMap<SpeakerTurn, Double> result = new HashMap<>();
@@ -35,6 +35,52 @@ public class Searcher {
             } else {
                 result.put(turn, score);
             }
+        }
+
+        return result;
+    }
+
+    //Returns a map with speakerturns and their respective scores according to the amount of occurrences of the terms. Scores terms as individual words as well as longer strings (in the case they are longer than 1 word). TODO check if score needs to be adjusted for longer terms.
+    public static HashMap<SpeakerTurn, Double> multiLongTermFrequency(ArrayList<SpeakerTurn> input, ArrayList<String> terms,
+                                                                  boolean compensateLength){
+        HashMap<SpeakerTurn, Double> result = new HashMap<>();
+
+        //Split terms into individual terms
+        ArrayList<String> termsSplit = new ArrayList<>();
+        for (String term : terms){
+            ArrayList<String> split = Utils.tokenize(term);
+            for (String spl : split){
+                termsSplit.add(spl);
+            }
+        }
+
+        termsSplit = Utils.wordize(termsSplit);
+
+        //For each speaker turn, look at the simple words that are in the turn, count the frequency of the searchterms,
+        // this is the score for the specific turn. Possibility for accounting for longer terms.
+        for(SpeakerTurn turn : input){
+            double score = 0;
+            for(String term : termsSplit){
+                score += Collections.frequency(turn.getWords(), term);
+            }
+            if(compensateLength){
+                result.put(turn, score/turn.getWordCount());
+            } else {
+                result.put(turn, score);
+            }
+        }
+
+        //Check for strings longer than 1 word.
+        for(SpeakerTurn turn : input){
+            double score = result.get(turn);
+            for(String term : terms){
+                if(term.split(" ").length > 1){
+                    if(turn.getText().contains(term)) {
+                        score += 100;
+                    }
+                }
+            }
+            result.put(turn, score);
         }
 
         return result;
