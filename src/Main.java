@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Main {
             HashMap<SpeakerTurn, Double> scores = Searcher.multiLongTermFrequency(turns, in, false);
             File output = new File("out.txt");
             PrintWriter out = new PrintWriter(output);
-            for(SpeakerTurn turn : scores.keySet()){
+            for (SpeakerTurn turn : scores.keySet()) {
                 out.write(turn.getText() + " : " + scores.get(turn) + "\n");
             }
             out.flush();
