@@ -11,9 +11,11 @@ public class Main {
 
         File file = new File("test.txt");
 
+        ArrayList<String> in = new ArrayList<String>(List.of(args));
+
         try {
             ArrayList<SpeakerTurn> turns = Utils.splitTurns(file);
-            HashMap<SpeakerTurn, Double> scores = Searcher.multiLongTermFrequency(turns, new ArrayList<String>(List.of("dan overzicht", "zo dan wordt", "zo dan wordt", "dan overzicht")), false);
+            HashMap<SpeakerTurn, Double> scores = Searcher.multiLongTermFrequency(turns, in, false);
             for(SpeakerTurn turn : scores.keySet()){
                 System.out.println("Speakerturn text: " + turn.getText() + "\n Score: " + scores.get(turn));
             }
