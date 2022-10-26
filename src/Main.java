@@ -13,7 +13,7 @@ public class Main {
 
         try {
             ArrayList<SpeakerTurn> turns = Utils.splitTurns(file);
-            HashMap<SpeakerTurn, Integer> scores = Searcher.dumbSearch(turns, new ArrayList<String>(List.of("dan", "overzicht")));
+            HashMap<SpeakerTurn, Double> scores = Searcher.multiTermFrequency(turns, new ArrayList<String>(List.of("dan overzicht")), false);
             for(SpeakerTurn turn : scores.keySet()){
                 System.out.println("Speakerturn text: " + turn.getText() + "\n Score: " + scores.get(turn));
             }

@@ -12,11 +12,22 @@ public class Searcher {
                                                                   boolean compensateLength){
         HashMap<SpeakerTurn, Double> result = new HashMap<>();
 
+        //Split terms into individual terms
+        ArrayList<String> termsSplit = new ArrayList<>();
+        for (String term : terms){
+            ArrayList<String> split = Utils.tokenize(term);
+            for (String spl : split){
+                termsSplit.add(spl);
+            }
+        }
+
+        termsSplit = Utils.wordize(termsSplit);
+
         //For each speaker turn, look at the simple words that are in the turn, count the frequency of the searchterms,
         // this is the score for the specific turn. Possibility for accounting for longer terms.
         for(SpeakerTurn turn : input){
             double score = 0;
-            for(String term : terms){
+            for(String term : termsSplit){
                 score += Collections.frequency(turn.getWords(), term);
             }
             if(compensateLength){
