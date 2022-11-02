@@ -1,9 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -18,11 +17,20 @@ public class Main {
 
         File file = new File("in.txt");
 
-        ArrayList<String> in = new ArrayList<>(List.of(args));
+        ArrayList<String> in = new ArrayList<>();
 
         try {
+
+            //Scanner to read the terms file.
+            Scanner scan = new Scanner(new File("terms.txt"));
+            while (scan.hasNext()){
+                in.add(scan.next());
+            }
+            scan.close();
+
             ArrayList<SpeakerTurn> turns = Utils.splitTurns(file);
-            HashMap<SpeakerTurn, Double> scores = Searcher.multiLongTermFrequency(turns, in, false);
+            HashMap<SpeakerTurn, Double> scores = Searcher.multiTermFrequency(turns, in, false);
+
             File output;
             if(JSON.equals("json")){
                 output = new File("out.json");

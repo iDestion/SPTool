@@ -1,10 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.BreakIterator;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Utils {
 
