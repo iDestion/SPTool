@@ -54,6 +54,21 @@ public class Utils {
         return result;
     }
 
+    //TODO implement this
+    public static LinkedHashMap<SpeakerTurn, Double> sortMap(HashMap<SpeakerTurn, Double> in){
+        LinkedHashMap<SpeakerTurn, Double> result = new LinkedHashMap<>();
+
+        for(SpeakerTurn turn : in.keySet()){
+            for(SpeakerTurn sortedTurn : result.keySet()){
+                if(in.get(turn) > result.get(sortedTurn)){
+
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static double frequency(String text, String term) {
         return 0;
     }

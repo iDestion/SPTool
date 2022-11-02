@@ -47,16 +47,19 @@ public class Main {
             }
             JSONArray array = new JSONArray();
             for (SpeakerTurn turn : scores.keySet()) {
-                if(JSON.equals("json")){
-                    JSONObject obj = new JSONObject();
-                    obj.put("turnNumber", turn.getTurnNumber());
-                    obj.put("speaker", turn.getSpeaker());
-                    obj.put("text" , turn.getText());
-                    obj.put("wordcount", turn.getWordCount());
-                    obj.put("score", scores.get(turn));
-                    array.add(obj);
-                } else {
-                    out.write(turn.getText() + " : " + scores.get(turn) + "\n");
+                //Only add turns to file or console when score is higher than 0
+                if(scores.get(turn) > 0) {
+                    if (JSON.equals("json")) {
+                        JSONObject obj = new JSONObject();
+                        obj.put("turnNumber", turn.getTurnNumber());
+                        obj.put("speaker", turn.getSpeaker());
+                        obj.put("text", turn.getText());
+                        obj.put("wordcount", turn.getWordCount());
+                        obj.put("score", scores.get(turn));
+                        array.add(obj);
+                    } else {
+                        out.write("Turn number: " + turn.getTurnNumber() + ", speaker: " + turn.getSpeaker() +  ", score: " + scores.get(turn) + "\n");
+                    }
                 }
             }
             if(JSON.equals("json")){out.write(array.toJSONString());}
