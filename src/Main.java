@@ -11,9 +11,11 @@ public class Main {
     public static void main(String[] args) {
 
         //final String JSON = "json";
-        //final String JSON = "txt";
-        final String JSON = "console";
+        final String JSON = "txt";
+        //final String JSON = "console";
 
+        //Configure the threshold used in identifying advice. Scores over threshold are included in output. Make threshold 0 to include all scored turns.
+        final int THRESHOLD = 20;
 
         File file = new File("in.txt");
 
@@ -48,7 +50,7 @@ public class Main {
             JSONArray array = new JSONArray();
             for (SpeakerTurn turn : scores.keySet()) {
                 //Only add turns to file or console when score is higher than 0
-                if(scores.get(turn) > 0) {
+                if(scores.get(turn) > THRESHOLD) {
                     if (JSON.equals("json")) {
                         JSONObject obj = new JSONObject();
                         obj.put("turnNumber", turn.getTurnNumber());
